@@ -1,4 +1,4 @@
-package link.zzone;
+package link.zzone.server;
 
 /**
  * @author chrischen
