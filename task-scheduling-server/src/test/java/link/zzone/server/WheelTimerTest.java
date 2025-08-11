@@ -2,6 +2,7 @@ package link.zzone.server;
 
 import io.netty.util.HashedWheelTimer;
 import io.netty.util.concurrent.DefaultThreadFactory;
+import io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,5 +35,7 @@ public class WheelTimerTest {
             Thread.sleep(2000);
             System.out.println(System.currentTimeMillis());
         }, 1, TimeUnit.SECONDS);
+
+//        MpscArrayQueue
     }
 }
