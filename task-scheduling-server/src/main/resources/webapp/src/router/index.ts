@@ -1,28 +1,28 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: [
     {
       path: '/',
       name: 'Dashboard',
-      component: () => import('@/views/Dashboard.vue'),
+      component: () => import('@/views/dashboard/Dashboard.vue'),
     },
     {
       path: '/dags',
       name: 'DAGList',
-      component: () => import('@/views/DAGList.vue'),
+      component: () => import('@/views/dag/DAGList.vue'),
     },
     {
       path: '/dags/:id/edit',
       name: 'DAGEditor',
-      component: () => import('@/views/DAGEditor.vue'),
+      component: () => import('@/views/dag/DAGEditor.vue'),
       props: true,
     },
     {
       path: '/dags/new',
       name: 'NewDAG',
-      component: () => import('@/views/DAGEditor.vue'),
+      component: () => import('@/views/dag/DAGEditor.vue'),
       props: { isNew: true },
     },
   ],
