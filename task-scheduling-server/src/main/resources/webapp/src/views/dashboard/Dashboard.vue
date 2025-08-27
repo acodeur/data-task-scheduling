@@ -171,7 +171,7 @@ import {
   Timer,
   CircleCheck,
   CircleClose,
-  Play,
+  VideoPlay,
   Warning,
   SuccessFilled
 } from '@element-plus/icons-vue'
@@ -350,7 +350,7 @@ const getActivityIcon = (type: string) => {
   const icons: Record<string, any> = {
     success: SuccessFilled,
     error: CircleClose,
-    start: Play,
+    start: VideoPlay,
     warning: Warning
   }
   return icons[type] || Timer
@@ -368,7 +368,7 @@ const refreshData = async () => {
     // 这里应该调用API获取最新数据
     // const stats = await api.getDashboardStats()
     // Object.assign(dashboardStats, stats)
-    
+
     lastUpdateTime.value = dayjs().format('YYYY-MM-DD HH:mm:ss')
   } catch (error) {
     console.error('刷新数据失败:', error)
