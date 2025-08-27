@@ -9,6 +9,11 @@ const router = createRouter({
       component: () => import('@/views/dashboard/Dashboard.vue'),
     },
     {
+      path: '/tasks',
+      name: 'TaskRepository',
+      component: () => import('@/views/task/TaskRepository.vue'),
+    },
+    {
       path: '/dags',
       name: 'DAGList',
       component: () => import('@/views/dag/DAGList.vue'),
