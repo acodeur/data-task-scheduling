@@ -17,6 +17,15 @@ interface IMapProps {
 
 const props = defineProps<IMapProps>()
 echarts.registerMap('china', geoChinaJSON as any)
+
+// 地图数据转换器
+const mapDataConverter = (data: { name: string; value: number }[]) => {
+  return data.map(item => ({
+    name: item.name,
+    value: [0, 0, item.value] // [lng, lat, value]
+  }))
+}
+
 const options = computed<echarts.EChartsOption>(() => {
   return {
     backgroundColor: '#fff',

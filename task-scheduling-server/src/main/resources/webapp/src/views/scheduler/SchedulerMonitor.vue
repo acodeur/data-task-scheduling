@@ -1,7 +1,7 @@
 <template>
   <div class="scheduler-monitor">
     <!-- 页面标题和操作 -->
-    <PageContent>
+    <PageContent :config="pageConfig" :model="pageModel">
       <template #header>
         <div class="page-header">
           <div class="header-left">
@@ -314,9 +314,29 @@ import {
   RefreshRight, Search
 } from '@element-plus/icons-vue'
 import { PageContent } from '@/components/page'
+import type { IPageContentConfig, IPageContentModel } from '@/components/page/type'
 import dayjs from 'dayjs'
 
 const router = useRouter()
+
+// 页面配置
+const pageConfig: IPageContentConfig = {
+  pageName: 'scheduler-monitor',
+  header: {
+    title: '调度器监控',
+    btnTxt: '刷新'
+  },
+  columnList: [],
+  pagination: {
+    currentPage: 1,
+    pageSize: 20
+  }
+}
+
+const pageModel: IPageContentModel = {
+  dataList: [],
+  totalCount: 0
+}
 
 // 数据状态
 const loading = ref(false)
@@ -326,7 +346,7 @@ const statusFilter = ref('all')
 const dagFilter = ref('all')
 const searchKeyword = ref('')
 const showLogs = ref(false)
-const selectedJob = ref(null)
+const selectedJob = ref<any>(null)
 const jobLogs = ref('')
 
 // 统计数据
@@ -345,7 +365,7 @@ const dagList = ref([
 ])
 
 // 运行中的任务
-const runningJobs = ref([
+const runningJobs = ref<any[]>([
   {
     id: 'job-001',
     dagId: '1',
@@ -438,7 +458,7 @@ const filteredRunningJobs = computed(() => {
 })
 
 // 自动刷新定时器
-let refreshTimer: NodeJS.Timeout | null = null
+let refreshTimer: number | null = null
 
 // 方法
 const getStatusType = (status: string) => {

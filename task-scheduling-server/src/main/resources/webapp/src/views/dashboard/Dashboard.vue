@@ -73,9 +73,8 @@
             </div>
           </template>
           <PieEchart
-            :data="executionStatusData"
-            :options="statusChartOptions"
-            height="300px"
+            :labels="executionStatusLabels"
+            :values="executionStatusValues"
           />
         </el-card>
 
@@ -92,9 +91,8 @@
             </div>
           </template>
           <LineEchart
-            :data="executionTrendData"
-            :options="trendChartOptions"
-            height="300px"
+            :labels="trendLabels"
+            :values="trendValues"
           />
         </el-card>
       </div>
@@ -198,6 +196,9 @@ const executionStatusData = computed(() => [
   { name: '运行中', value: dashboardStats.runningTasks, itemStyle: { color: '#409EFF' } }
 ])
 
+const executionStatusLabels = computed(() => executionStatusData.value.map(item => item.name))
+const executionStatusValues = computed(() => executionStatusData.value.map(item => item.value))
+
 // 图表配置
 const statusChartOptions = {
   tooltip: {
@@ -228,6 +229,9 @@ const executionTrendData = reactive({
     }
   ]
 })
+
+const trendLabels = computed(() => executionTrendData.xAxis)
+const trendValues = computed(() => executionTrendData.series[0].data)
 
 const trendChartOptions = {
   tooltip: {
