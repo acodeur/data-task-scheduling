@@ -67,7 +67,7 @@
 
           <el-table-column prop="status" label="状态" width="120">
             <template #default="{ row }">
-              <el-tag :type="getStatusType(row.status)" size="small">
+              <el-tag :type="getStatusType(row.status) as any" size="small">
                 {{ getStatusText(row.status) }}
               </el-tag>
             </template>
@@ -197,7 +197,7 @@
           </el-table-column>
           <el-table-column prop="status" label="状态" width="100">
             <template #default="{ row }">
-              <el-tag :type="getStatusType(row.status)" size="small">
+              <el-tag :type="getStatusType(row.status) as any" size="small">
                 {{ getRunResultText(row.status) }}
               </el-tag>
             </template>
@@ -317,16 +317,15 @@ const dags = ref<DAG[]>([
     name: '数据处理流水线',
     description: '每日数据ETL处理工作流',
     status: 'active',
+    nodes: [],
+    edges: [],
+    version: 1,
     schedule: {
       enabled: true,
       cron: '0 2 * * *'
     },
     taskCount: 5,
-    lastRun: {
-      time: new Date(Date.now() - 2 * 60 * 60 * 1000),
-      status: 'success',
-      duration: 120000
-    },
+    lastRun: new Date(Date.now() - 2 * 60 * 60 * 1000),
     author: '张三',
     created: new Date('2024-01-10'),
     updated: new Date('2024-01-25')
@@ -336,16 +335,15 @@ const dags = ref<DAG[]>([
     name: '报表生成任务',
     description: '生成业务报表并发送邮件通知',
     status: 'active',
+    nodes: [],
+    edges: [],
+    version: 1,
     schedule: {
       enabled: true,
       cron: '0 8 * * MON'
     },
     taskCount: 3,
-    lastRun: {
-      time: new Date(Date.now() - 12 * 60 * 60 * 1000),
-      status: 'failed',
-      duration: 45000
-    },
+    lastRun: new Date(Date.now() - 12 * 60 * 60 * 1000),
     author: '李四',
     created: new Date('2024-01-05'),
     updated: new Date('2024-01-20')
@@ -355,6 +353,9 @@ const dags = ref<DAG[]>([
     name: '系统监控检查',
     description: '定期检查系统健康状态',
     status: 'paused',
+    nodes: [],
+    edges: [],
+    version: 1,
     schedule: {
       enabled: false,
       cron: ''

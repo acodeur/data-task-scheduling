@@ -104,9 +104,8 @@
             <span>服务器资源使用</span>
           </template>
           <BarEchart
-            :data="resourceUsageData"
-            :options="resourceChartOptions"
-            height="280px"
+            :labels="resourceLabels"
+            :values="resourceValues"
           />
         </el-card>
 
@@ -267,6 +266,9 @@ const resourceUsageData = reactive({
   ]
 })
 
+const resourceLabels = computed(() => resourceUsageData.xAxis)
+const resourceValues = computed(() => resourceUsageData.series[0].data)
+
 const resourceChartOptions = {
   tooltip: {
     trigger: 'axis'
@@ -365,7 +367,7 @@ const formatTime = (timestamp: Date) => {
 }
 
 // 定时刷新数据
-let refreshTimer: NodeJS.Timeout | null = null
+let refreshTimer: number | null = null
 
 const refreshData = async () => {
   try {

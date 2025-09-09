@@ -206,7 +206,7 @@
           <el-table-column prop="priority" label="优先级" width="100">
             <template #default="{ row }">
               <el-tag
-                :type="getPriorityType(row.priority)"
+                :type="getPriorityType(row.priority) as any"
                 size="small"
               >
                 {{ row.priority }}
@@ -311,7 +311,7 @@ import {
 } from 'element-plus'
 import {
   Timer, Clock, CircleCheck, CircleClose, VideoPlay, VideoPause,
-  RefreshRight, Search
+  RefreshRight, Search, VideoPlay as Play
 } from '@element-plus/icons-vue'
 import { PageContent } from '@/components/page'
 import type { IPageContentConfig, IPageContentModel } from '@/components/page/type'
@@ -542,8 +542,9 @@ const refreshData = async () => {
   }
 }
 
-const handleAutoRefreshChange = (enabled: boolean) => {
-  if (enabled) {
+const handleAutoRefreshChange = (enabled: string | number | boolean) => {
+  const isEnabled = Boolean(enabled)
+  if (isEnabled) {
     refreshTimer = setInterval(() => {
       refreshData()
     }, 30000) // 30秒刷新一次

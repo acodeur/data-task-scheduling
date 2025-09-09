@@ -18,6 +18,10 @@
     "noImplicitAny": false,
     "skipLibCheck": true,
     "noImplicitReturns": false,
-    "noImplicitThis": false
+    "noImplicitThis": false,
+    "strict": false,
+    "strictFunctionTypes": false,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false
   }
 }

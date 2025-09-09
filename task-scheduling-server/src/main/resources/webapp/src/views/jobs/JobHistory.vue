@@ -1,7 +1,7 @@
 <template>
   <div class="job-history">
     <!-- 页面标题和操作 -->
-    <PageContent>
+    <PageContent :config="pageConfig" :model="pageModel">
       <template #header>
         <div class="page-header">
           <div class="header-left">
@@ -286,9 +286,29 @@ import {
   RefreshRight, Download, Search, MoreFilled
 } from '@element-plus/icons-vue'
 import { PageContent } from '@/components/page'
+import type { IPageContentConfig, IPageContentModel } from '@/components/page/type'
 import dayjs from 'dayjs'
 
 const router = useRouter()
+
+// 页面配置
+const pageConfig: IPageContentConfig = {
+  pageName: 'job-history',
+  header: {
+    title: '执行历史',
+    btnTxt: '刷新'
+  },
+  columnList: [],
+  pagination: {
+    currentPage: 1,
+    pageSize: 20
+  }
+}
+
+const pageModel: IPageContentModel = {
+  dataList: [],
+  totalCount: 0
+}
 
 // 数据状态
 const loading = ref(false)
@@ -314,7 +334,7 @@ const dagList = ref([
 ])
 
 // 执行历史数据
-const jobs = ref([
+const jobs = ref<any[]>([
   {
     id: 'job-20240127-001',
     dagId: '1',
