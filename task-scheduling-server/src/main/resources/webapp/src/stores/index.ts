@@ -1,7 +1,7 @@
 import { createPinia } from 'pinia'
 import type { App } from 'vue'
 import useLoginStore from './login/login'
-import useCommonStrore from './common'
+import useCommonStore from './common'
 
 const pinia = createPinia()
 
@@ -11,9 +11,9 @@ function install(app: App<Element>) {
   const loginStore = useLoginStore()
   loginStore.resetStateFromCache()
   // 加载公共数据，如角色、部门
-  const commonStrore = useCommonStrore()
-  commonStrore.loadAllRole()
-  commonStrore.loadAllDepartment()
+  const commonStore = useCommonStore()
+  commonStore.loadAllRole()
+  commonStore.loadAllDepartment()
 }
 
 export default install

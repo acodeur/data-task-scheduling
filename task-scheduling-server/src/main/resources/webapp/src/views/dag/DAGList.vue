@@ -1,7 +1,7 @@
 <template>
   <div class="dag-list">
     <!-- 页面标题和操作 -->
-    <PageContent>
+    <PageContent :config="pageConfig" :model="pageModel">
       <template #header>
         <div class="page-header">
           <div class="header-left">
@@ -22,8 +22,8 @@
 
       <!-- 搜索和筛选 -->
       <PageSearch
+        :config="searchConfig"
         v-model="searchForm"
-        :fields="searchFields"
         @search="handleSearch"
         @reset="handleReset"
       />
@@ -224,9 +224,54 @@ import {
 } from '@element-plus/icons-vue'
 import { PageContent, PageSearch } from '@/components/page'
 import type { DAG, DAGFilter, RunStatus } from '@/types/dag'
+import type { IPageContentConfig, IPageContentModel } from '@/components/page/type'
+import type { IForm } from '@/components/form/type'
 import dayjs from 'dayjs'
 
 const router = useRouter()
+
+// 页面配置
+const pageConfig: IPageContentConfig = {
+  pageName: 'dag-list',
+  header: {
+    title: '工作流管理',
+    btnTxt: '创建工作流'
+  },
+  columnList: [],
+  pagination: {
+    currentPage: 1,
+    pageSize: 20
+  }
+}
+
+const pageModel: IPageContentModel = {
+  dataList: [],
+  totalCount: 0
+}
+
+// 搜索配置
+const searchConfig: IForm = {
+  formItems: [
+    {
+      field: 'keyword',
+      label: '关键词',
+      component: 'input',
+      componentProps: { placeholder: '搜索工作流名称、描述' }
+    },
+    {
+      field: 'author',
+      label: '创建者',
+      component: 'input'
+    },
+    {
+      field: 'dateRange',
+      label: '创建时间',
+      component: 'datepicker',
+      componentProps: { type: 'daterange' }
+    }
+  ],
+  formProps: {}
+}
 
 // 数据状态
 const searchForm = ref<DAGFilter>({})
@@ -235,7 +280,7 @@ const currentPage = ref(1)
 const pageSize = ref(20)
 const showHistory = ref(false)
 const selectedDAG = ref<DAG | null>(null)
-const runHistory = ref([])
+const runHistory = ref<any[]>([])
 
 // 搜索字段配置
 const searchFields = [
@@ -346,7 +391,7 @@ const filteredDAGs = computed(() => {
 
 // 方法
 const getStatusIcon = (status: string) => {
-  const icons = {
+  const icons: Record<string, any> = {
     active: VideoPlay,
     paused: VideoPause,
     running: Timer,
@@ -356,7 +401,7 @@ const getStatusIcon = (status: string) => {
 }
 
 const getStatusType = (status: string) => {
-  const types = {
+  const types: Record<string, string> = {
     active: 'success',
     paused: 'warning',
     running: 'primary',
@@ -368,7 +413,7 @@ const getStatusType = (status: string) => {
 }
 
 const getStatusText = (status: string) => {
-  const texts = {
+  const texts: Record<string, string> = {
     active: '运行中',
     paused: '已暂停',
     running: '执行中',
@@ -378,7 +423,7 @@ const getStatusText = (status: string) => {
 }
 
 const getRunResultText = (status: string) => {
-  const texts = {
+  const texts: Record<string, string> = {
     success: '成功',
     failed: '失败',
     running: '运行中',

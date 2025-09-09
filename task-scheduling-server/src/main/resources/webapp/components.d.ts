@@ -11,23 +11,7 @@ declare module 'vue' {
     BarEchart: typeof import('./src/components/echarts/src/BarEchart.vue')['default']
     BaseEchart: typeof import('./src/components/echarts/src/BaseEchart.vue')['default']
     DynamicForm: typeof import('./src/components/form/DynamicForm.vue')['default']
-    ElAside: typeof import('element-plus/es')['ElAside']
-    ElButton: typeof import('element-plus/es')['ElButton']
-    ElCol: typeof import('element-plus/es')['ElCol']
-    ElContainer: typeof import('element-plus/es')['ElContainer']
-    ElDialog: typeof import('element-plus/es')['ElDialog']
-    ElFormItem: typeof import('element-plus/es')['ElFormItem']
-    ElHeader: typeof import('element-plus/es')['ElHeader']
     ElIcon: typeof import('element-plus/es')['ElIcon']
-    ElMain: typeof import('element-plus/es')['ElMain']
-    ElMenu: typeof import('element-plus/es')['ElMenu']
-    ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
-    ElOption: typeof import('element-plus/es')['ElOption']
-    ElPagination: typeof import('element-plus/es')['ElPagination']
-    ElRow: typeof import('element-plus/es')['ElRow']
-    ElTable: typeof import('element-plus/es')['ElTable']
-    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
-    ElTag: typeof import('element-plus/es')['ElTag']
     LineEchart: typeof import('./src/components/echarts/src/LineEchart.vue')['default']
     MapEchart: typeof import('./src/components/echarts/src/MapEchart.vue')['default']
     PageContent: typeof import('./src/components/page/PageContent.vue')['default']
@@ -37,5 +21,8 @@ declare module 'vue' {
     RoseEchart: typeof import('./src/components/echarts/src/RoseEchart.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+  }
+  export interface GlobalDirectives {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

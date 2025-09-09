@@ -54,7 +54,7 @@
           <template v-for="route in menuRoutes" :key="route.path">
             <el-menu-item :index="route.path" v-if="!route.meta?.hidden">
               <el-icon v-if="route.meta?.icon">
-                <component :is="getIconComponent(route.meta.icon)" />
+                <component :is="getIconComponent(route.meta.icon as string)" />
               </el-icon>
               <span>{{ route.meta?.title || route.name }}</span>
             </el-menu-item>
@@ -158,7 +158,7 @@ const menuRoutes = computed(() => {
 })
 
 // 图标组件映射
-const iconComponents = {
+const iconComponents: Record<string, any> = {
   Monitor,
   Share,
   Timer,
@@ -173,7 +173,7 @@ const showBreadcrumb = computed(() => {
 })
 
 const breadcrumbItems = computed(() => {
-  const items = []
+  const items: Array<{ title: string; path?: string }> = []
   const pathArray = route.path.split('/').filter(Boolean)
   let currentPath = ''
   
@@ -183,7 +183,7 @@ const breadcrumbItems = computed(() => {
     
     if (routeRecord.meta?.title) {
       items.push({
-        title: routeRecord.meta.title,
+        title: routeRecord.meta.title as string,
         path: index === pathArray.length - 1 ? undefined : currentPath
       })
     }

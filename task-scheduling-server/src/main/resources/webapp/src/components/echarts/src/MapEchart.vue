@@ -8,7 +8,7 @@
 import { computed } from 'vue'
 import BaseEchart from './BaseEchart.vue'
 import * as echarts from 'echarts'
-import { mapDataConverter } from '../utils/visual-map';
+import { visualMapConfigs } from '../utils/visual-map'
 import geoChinaJSON from '../data/china.json'
 
 interface IMapProps {

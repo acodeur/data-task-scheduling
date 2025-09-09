@@ -1,7 +1,7 @@
 <template>
   <div class="task-repository">
     <!-- 页面标题和操作 -->
-    <PageContent>
+    <PageContent :config="pageConfig" :model="pageModel">
       <template #header>
         <div class="page-header">
           <div class="header-left">
@@ -22,8 +22,8 @@
 
       <!-- 搜索和筛选 -->
       <PageSearch
+        :config="searchConfig"
         v-model="searchForm"
-        :fields="searchFields"
         @search="handleSearch"
         @reset="handleReset"
       />
@@ -252,15 +252,13 @@
 
     <!-- 创建/编辑任务对话框 -->
     <PageDialog
+      :config="dialogConfig"
       v-model="showCreateDialog"
-      :title="editingTask ? '编辑任务模板' : '创建任务模板'"
-      width="800px"
       @confirm="handleSaveTask"
     >
       <DynamicForm
+        :iForm="taskFormConfig"
         v-model="taskForm"
-        :fields="taskFormFields"
-        :rules="taskFormRules"
       />
     </PageDialog>
 
@@ -296,6 +294,8 @@ import { PageContent, PageSearch, PageDialog } from '@/components/page'
 import { DynamicForm } from '@/components/form'
 import TaskDetail from './TaskDetail.vue'
 import type { TaskTemplate, TaskType, TaskCategory, TaskFilter } from '@/types/task'
+import type { IPageContentConfig, IPageContentModel, IPageDialogConfig } from '@/components/page/type'
+import type { IForm } from '@/components/form/type'
 import dayjs from 'dayjs'
 
 // 数据状态
@@ -441,9 +441,107 @@ const filteredTasks = computed(() => {
   return filtered
 })
 
+// 页面配置
+const pageConfig: IPageContentConfig = {
+  pageName: 'task-repository',
+  header: {
+    title: '任务仓库',
+    btnTxt: '创建任务模板'
+  },
+  columnList: [],
+  pagination: {
+    currentPage: 1,
+    pageSize: 12
+  }
+}
+
+const pageModel: IPageContentModel = {
+  dataList: [],
+  totalCount: 0
+}
+
+// 搜索配置
+const searchConfig: IForm = {
+  formItems: [
+    {
+      field: 'keyword',
+      label: '关键词',
+      component: 'input',
+      componentProps: { placeholder: '搜索任务名称、描述、标签' }
+    },
+    {
+      field: 'type',
+      label: '任务类型',
+      component: 'select',
+      componentProps: { multiple: true },
+      options: [
+        { label: 'SQL查询', value: 'sql' },
+        { label: '脚本执行', value: 'script' },
+        { label: 'HTTP请求', value: 'http' },
+        { label: '文件传输', value: 'file_transfer' },
+        { label: '数据同步', value: 'data_sync' },
+        { label: '邮件发送', value: 'email' },
+        { label: '自定义', value: 'custom' }
+      ]
+    },
+    {
+      field: 'author',
+      label: '作者',
+      component: 'input'
+    },
+    {
+      field: 'dateRange',
+      label: '更新时间',
+      component: 'datepicker',
+      componentProps: { type: 'daterange' }
+    }
+  ],
+  formProps: {}
+}
+
+// 对话框配置
+const dialogConfig: IPageDialogConfig = {
+  header: {
+    addTitle: '创建任务模板',
+    editTitle: '编辑任务模板'
+  },
+  dialogProps: {
+    width: '800px'
+  },
+  footer: {
+    cancelTxt: '取消',
+    addConfirmTxt: '创建',
+    editConfirmTxt: '保存'
+  },
+  formConfig: {
+    ui: {
+      formItems: [],
+      formProps: {}
+    }
+  }
+}
+
+// 表单配置
+const taskFormConfig: IForm = {
+  formItems: [
+    {
+      field: 'name',
+      label: '任务名称',
+      component: 'input',
+      required: true
+    },
+    {
+      field: 'description',
+      label: '任务描述',
+      component: 'input'
+    }
+  ],
+  formProps: {}
+}
+
 // 任务表单配置
 const taskForm = ref<Partial<TaskTemplate>>({})
-const taskFormFields = [
+const taskFormFields: any[] = [
   // 这里应该定义任务表单字段
 ]
 const taskFormRules = {}

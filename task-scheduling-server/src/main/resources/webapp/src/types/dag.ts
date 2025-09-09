@@ -35,10 +35,13 @@ export interface DAG {
     cron?: string
     enabled: boolean
   }
-  status: 'draft' | 'active' | 'disabled'
+  status: 'draft' | 'active' | 'disabled' | 'paused'
   created: Date
   updated: Date
   version: number
+  taskCount?: number
+  lastRun?: Date | null
+  author?: string
 }
 
 // Execution Result
@@ -67,3 +70,18 @@ export interface ValidationResult {
     edgeId?: string
   }>
 }
+
+// DAG Filter Types
+export interface DAGFilter {
+  status?: ('draft' | 'active' | 'disabled' | 'paused')[]
+  name?: string
+  keyword?: string
+  author?: string
+  dateRange?: {
+    start: Date
+    end: Date
+  }
+}
+
+// Run Status Types
+export type RunStatus = 'running' | 'pending' | 'success' | 'failed' | 'cancelled'

@@ -453,7 +453,7 @@ const getStatusType = (status: string) => {
 }
 
 const getStatusText = (status: string) => {
-  const texts = {
+  const texts: Record<string, string> = {
     running: '运行中',
     pending: '等待中',
     success: '成功',
@@ -470,7 +470,7 @@ const getProgressStatus = (status: string) => {
 }
 
 const getPriorityType = (priority: string) => {
-  const types = {
+  const types: Record<string, string> = {
     high: 'danger',
     normal: 'primary',
     low: 'info'
